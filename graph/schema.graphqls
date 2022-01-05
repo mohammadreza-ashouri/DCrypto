@@ -1,0 +1,67 @@
+type Pricefeed { 
+    id: ID!
+    feedSource: SourceMetaData # Describe the properties of the data-feed source
+    originalTimestamp: String! # this timestap represents the timestamp of fetched data from its source, e.g., 6 hours ago
+    fetchTimestamp: String! # this timestap represents the time of fetching data from its source and storing in our local DB, e.g., 1 hours ago
+    low: String! # low price
+    high: String! # high price
+    last: String! # the latest price on that source
+    volume: String!
+    volume30d: String! #30d volume
+    priceChange: String! 
+    priceChangePercentage: String!
+    pair: String! # ETH/USD ETH/EUR ETH/NOK
+  }
+
+  type SourceMetaData { # it is a metadata object linked to PriceFeed describing the source properties
+    id: ID!
+    url: String # it is the URL of the data source,e.g.,  http://xyz.com/getprice?RTH
+    chainType: String! # onchain / off-chain
+    serviceType: String! # RESTAPI/Graphql
+    label: String! # Here we can label the source of price feed for internal purposes. For instance, commercial, FOSS, reliable, unreliable, etc.
+  }
+
+
+input NewPrice {
+
+  timestamp: String!
+  low: String!
+  high: String!
+  last: String!
+  volume: String!
+  volume30d: String!
+  priceChange: String!
+  priceChangePercentage: String!
+  pair: String! 
+}
+
+
+type Token {
+  id: ID!
+  symbol: String!
+  usdprice: String!
+  europrice: String!
+  nokprice: String!
+  timestamp: String!
+
+}
+
+input NewToken {
+
+  symbol: String!
+  usdprice: String!
+  europrice: String!
+  nokprice: String!
+}
+
+
+type Query {
+  tokens: [Token!]!
+  prices: [Price!]!
+}
+
+type Mutation {
+  createToken(input: NewToken!): Token!
+  createPrice(input: NewPrice!): Price!
+}
+

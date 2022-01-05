@@ -1,0 +1,55 @@
+type Price { 
+  timestamp: String!
+  low: String!
+  high: String!
+  last: String!
+  volume: String!
+  volume30d: String!
+  priceChange: String!
+  priceChangePercentage: String!
+  pair: String! 
+  }
+
+input NewPrice {
+
+  timestamp: String!
+  low: String!
+  high: String!
+  last: String!
+  volume: String!
+  volume30d: String!
+  priceChange: String!
+  priceChangePercentage: String!
+  pair: String! 
+}
+
+
+type Token {
+  id: ID!
+  symbol: String!
+  usdprice: String!
+  europrice: String!
+  nokprice: String!
+  timestamp: String!
+
+}
+
+input NewToken {
+
+  symbol: String!
+  usdprice: String!
+  europrice: String!
+  nokprice: String!
+}
+
+
+type Query {
+  tokens: [Token!]!
+  prices: [Price!]!
+}
+
+type Mutation {
+  createToken(input: NewToken!): Token!
+  createPrice(input: NewPrice!): Price!
+}
+
